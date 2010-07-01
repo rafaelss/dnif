@@ -25,3 +25,12 @@ task :build_gem do
 end
 
 Jeweler::GemcutterTasks.new
+
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.test_files = FileList.new('test/**/test_*.rb') do |list|
+    list.exclude 'test/test_helper.rb'
+  end
+  test.libs << 'test'
+  test.verbose = true
+end

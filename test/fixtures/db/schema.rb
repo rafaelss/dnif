@@ -8,6 +8,11 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string :name
   end
 
+  create_table "people", :force => true do |t|
+    t.string :first_name
+    t.string :last_name
+  end
+
   create_table "posts", :force => true do |t|
     t.string :title
     t.datetime :published_at

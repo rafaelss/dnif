@@ -59,7 +59,7 @@ module Dnif
         builder = ActiveRecord::Base.classes[self.class.name]
         if not builder.nil?
           class_id = Dnif::MultiAttribute.encode(self.class.name)
-          sphinx_id = id * ActiveRecord::Base.classes.length + (class_id.split(',').sum { |c| c.to_i })
+          sphinx_id = id + class_id.split(',').sum { |c| c.to_i }
           xml = "<sphinx:document id=\"#{sphinx_id}\">\n"
 
           builder.fields.each do |field|

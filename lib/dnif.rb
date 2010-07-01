@@ -43,10 +43,10 @@ module Dnif
       filename.classify.constantize
     end
   end
+end
 
-  if defined?(Rails)
-    self.root_path = RAILS_ROOT
-    self.environment = RAILS_ENV
-    self.models_path = File.join(RAILS_ROOT, "app", "models")
-  end
+if defined?(Rails)
+  Dnif.root_path = RAILS_ROOT
+  Dnif.environment = RAILS_ENV
+  Dnif.models_path = File.join(RAILS_ROOT, "app", "models")
 end

@@ -1,8 +1,5 @@
 # encoding: utf-8
-
-$:.unshift(File.dirname(__FILE__) + "/../../lib/")
-require 'test/unit'
-require 'dnif'
+require 'test_helper'
 
 class TestIndexBuilder < Test::Unit::TestCase
 

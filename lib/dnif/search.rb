@@ -14,11 +14,11 @@ module Dnif
     raise results[:error] if results[:error]
 
     models = results[:matches].inject({}) do |memo, match|
-      class_id = match[:attributes]["class_id"]
+      class_id = match[:attributes]["class_id"].split(',')
       class_name = Dnif::MultiAttribute.decode(class_id)
 
       memo[class_name] ||= []
-      memo[class_name] << (match[:doc] - class_id.sum { |c| c.to_i }) / ActiveRecord::Base.classes.length
+      memo[class_name] << (match[:doc] - class_id.sum { |c| c.to_i })
       memo
     end
 
