@@ -13,6 +13,8 @@ begin
     gemspec.files = %w(Rakefile dnif.gemspec README.rdoc) + Dir["{lib,test}/**/*"]
 
     gemspec.add_dependency "activerecord"
+    gemspec.add_dependency "activesupport"
+    gemspec.add_dependency "riddle"
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
