@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dnif}
-  s.version = "0.0.1.alpha.1"
+  s.version = "0.0.1.alpha.2"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rafael Souza"]
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
      "test/fixtures/log/searchd.pid",
      "test/fixtures/models.rb",
      "test/fixtures/templates/config.erb",
+     "test/test_helper.rb",
      "test/unit/test_configuration.rb",
      "test/unit/test_dnif.rb",
      "test/unit/test_index_builder.rb",
@@ -45,6 +46,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/fixtures/db/schema.rb",
      "test/fixtures/models.rb",
+     "test/test_helper.rb",
      "test/unit/test_configuration.rb",
      "test/unit/test_dnif.rb",
      "test/unit/test_index_builder.rb",
