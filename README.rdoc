@@ -8,7 +8,7 @@ dnif is a gem to index data using ActiveRecord finders, letting you index your c
 
   require "dnif"
 
-  class Post
+  class Post < ActiveRecord::Base
 
     define_index do
       field :title
