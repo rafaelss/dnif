@@ -1,21 +1,27 @@
-$:.unshift(File.dirname(__FILE__) + "/lib")
-require 'dnif/tasks'
+begin
+  require 'jeweler'
 
-namespace :test do
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "dnif"
+    gemspec.summary = "dnif is the new find... for sphinx"
+    gemspec.description = "dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not your table fields "
+    gemspec.email = "me@rafaelss.com"
+    gemspec.homepage = "http://github.com/rafaelss/dnif"
+    gemspec.authors = ["Rafael Souza"]
 
-  namespace :dnif do
+    gemspec.has_rdoc = false
+    gemspec.files = %w(Rakefile dnif.gemspec README.rdoc) + Dir["{lib,test}/**/*"]
 
-    task :xml do
-      require File.dirname(__FILE__) + "/test/fixtures/models"
-      ::ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
-      ::ActiveRecord::Base.logger = Logger.new(StringIO.new)
-      silence_stream(STDOUT) { load "test/fixtures/db/schema.rb" }
-
-      Post.create!(:title => "My First Post", :published_at => DateTime.now, :draft => false)
-      Post.create!(:title => "My Second Post", :published_at => DateTime.now, :draft => true)
-
-      klass = ENV['MODEL'].constantize
-      puts klass.to_sphinx
-    end
+    gemspec.add_dependency "activerecord"
   end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
 end
+
+desc "Generate gemspec and build gem"
+task :build_gem do
+  Rake::Task["gemspec"].invoke
+  Rake::Task["build"].invoke
+end
+
+Jeweler::GemcutterTasks.new
