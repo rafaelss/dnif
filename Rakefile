@@ -4,7 +4,7 @@ begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "dnif"
     gemspec.summary = "dnif is the new find... for sphinx"
-    gemspec.description = "dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not your table fields "
+    gemspec.description = "dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not only your table fields"
     gemspec.email = "me@rafaelss.com"
     gemspec.homepage = "http://github.com/rafaelss/dnif"
     gemspec.authors = ["Rafael Souza"]

@@ -2,7 +2,7 @@
 
 dnif is the new find... for sphinx
 
-dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not your table fields
+dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not only your table fields
 
 == Usage
 
