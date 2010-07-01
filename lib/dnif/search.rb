@@ -14,7 +14,7 @@ module Dnif
     raise results[:error] if results[:error]
 
     models = results[:matches].inject({}) do |memo, match|
-      class_id = match[:attributes]["class_id"].split(',')
+      class_id = match[:attributes]["class_id"].split(',').flatten
       class_name = Dnif::MultiAttribute.decode(class_id)
 
       memo[class_name] ||= []
