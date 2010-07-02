@@ -18,7 +18,7 @@ searchd {
 source <%= name %>
 {
   type = xmlpipe2
-  xmlpipe_command = MODEL=<%= model %> rake dnif:xml --silent
+  xmlpipe_command = <%= (defined?(Rails) ? "RAILS_ENV" : "RACK_ENV") %>=<%= Dnif.environment %> MODEL=<%= model %> rake dnif:xml --silent
 }
 <% end %>
 
