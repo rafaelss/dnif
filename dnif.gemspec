@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dnif}
-  s.version = "0.0.1.alpha.3"
+  s.version = "0.0.1.alpha.4"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rafael Souza"]
-  s.date = %q{2010-07-01}
+  s.date = %q{2010-07-02}
   s.description = %q{dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not only your table fields}
   s.email = %q{me@rafaelss.com}
   s.extra_rdoc_files = [
