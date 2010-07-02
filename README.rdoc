@@ -31,11 +31,15 @@ dnif is a gem to index data using ActiveRecord finders, letting you index your c
 
 == TODO
 
-- Improve the test suite
+- Add messages for rake tasks
+- Better error handler
+- Try to remove ActiveRecord dependency, making it work with others ORMs/ODMs/etc
+- Documentation
+- Improve test suite
 
 == Maintainer
 
-* Rafael Souza - http://rafaelss.com/
+* Rafael Souza - http://rafaelss.com
 
 == License
 
