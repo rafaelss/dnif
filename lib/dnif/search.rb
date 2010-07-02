@@ -3,10 +3,6 @@ module Dnif
   def self.search(query, options = {})
     options.reverse_merge!(:index => '*')
 
-    Dnif.root_path ||= File.expand_path(File.dirname("."))
-    searchd = Dnif::Configuration.options_for("searchd", File.join(Dnif.root_path, "config/sphinx", Dnif.environment + ".erb"))
-    client = Riddle::Client.new(*searchd["listen"].split(":"))
-
     if not options[:class].nil?
       filter_value = Dnif::MultiAttribute.encode(options[:class]).split(",").map(&:to_i)
       client.filters << Riddle::Client::Filter.new("class_id", filter_value)
@@ -27,6 +23,23 @@ module Dnif
     models.map do |class_name, ids|
       class_name.constantize.find_all_by_id(ids)
     end.flatten
+  end
+
+  def self.client
+    searchd = Dnif::Configuration.options_for("searchd", config_path)
+    if searchd["listen"]
+      address, port = searchd["listen"].split(":")
+    else
+      address = searchd["address"] || "127.0.0.1"
+      port = searchd["port"] || 3313
+    end
+
+    client = Riddle::Client.new(address, port)
+  end
+
+  def self.config_path
+    Dnif.root_path ||= File.expand_path(File.dirname("."))
+    File.join(Dnif.root_path, "config/sphinx", Dnif.environment + ".erb")
   end
 
   module Search
