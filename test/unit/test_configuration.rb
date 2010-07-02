@@ -29,4 +29,9 @@ class TestConfiguration < Test::Unit::TestCase
     assert_equal ["users_main", "people_main", "orders_main", "notes_main"], names
     assert_equal ["User", "Person", "Order", "Note"], classes
   end
+
+  test ".options_for" do
+    client = Dnif::Configuration.options_for("searchd", File.join(Dnif.root_path, "templates", "config.erb"))
+    assert client.is_a?(Hash)
+  end
 end
