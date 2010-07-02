@@ -3,7 +3,9 @@ module Dnif
   def self.search(query, options = {})
     options.reverse_merge!(:index => '*')
 
-    client = Riddle::Client.new("127.0.0.1", 3313)
+    Dnif.root_path ||= File.expand_path(File.dirname("."))
+    searchd = Dnif::Configuration.options_for("searchd", File.join(Dnif.root_path, "config/sphinx", Dnif.environment + ".erb"))
+    client = Riddle::Client.new(*searchd["listen"].split(":"))
 
     if not options[:class].nil?
       filter_value = Dnif::MultiAttribute.encode(options[:class]).split(",").map(&:to_i)

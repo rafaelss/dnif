@@ -21,7 +21,8 @@ class TestSearch < Test::Unit::TestCase
       }]
     }
 
-    Riddle::Client.any_instance.expects(:query).times(2).with("post", "*").returns(results_for_post, results_for_comment)
+    Dnif::Configuration.expects(:options_for).twice.returns({ "listen" => "127.0.0.1:3333" })
+    Riddle::Client.any_instance.expects(:query).twice.with("post", "*").returns(results_for_post, results_for_comment)
 
     Post.expects(:find_all_by_id).once.with([1])
     Comment.expects(:find_all_by_id).once.with([2])
