@@ -23,6 +23,10 @@ dnif is a gem to index data using ActiveRecord finders, letting you index your c
     end
   end
 
+  rake dnif:configure
+  rake dnif:index
+  rake dnif:start
+
   Post.search("dnif")
 
 == TODO
