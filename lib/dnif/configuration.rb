@@ -7,10 +7,8 @@ module Dnif
   class Configuration
 
     def self.generate(config_path)
-      Tilt.register 'erb', Tilt::ErubisTemplate
-
-      template = Tilt.new(config_path)
-      output = template.render(self)
+      template = ERB.new(File.read(config_path))
+      output = template.result(binding)
 
       # TODO turn "db/sphinx" and "config/sphinx" configurable
       FileUtils.mkdir_p(File.join(Dnif.root_path, "db", "sphinx", Dnif.environment))

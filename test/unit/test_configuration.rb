@@ -5,11 +5,11 @@ require 'erb'
 class TestConfiguration < Test::Unit::TestCase
 
   test "generate configuration from default template" do
-    Tilt.expects(:register).with('erb', Tilt::ErubisTemplate)
+    File.expects(:read).with("config/path.erb").returns("configurations")
 
     template = mock("Template")
-    template.expects(:render).with(Dnif::Configuration).returns('output')
-    Tilt.expects(:new).with("config/path.erb").returns(template)
+    template.expects(:result).returns('output')
+    ERB.expects(:new).with("configurations").returns(template)
 
     file = mock
     file.expects(:puts).with('output')
