@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'tilt'
 require 'dnif'
 
 module Dnif
