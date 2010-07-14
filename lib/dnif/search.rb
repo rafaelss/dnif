@@ -3,9 +3,9 @@ module Dnif
   def self.search(query, options = {})
     options.reverse_merge!(:index => '*')
 
-    if not options[:class].nil?
+    if options[:class]
       filter_value = Dnif::MultiAttribute.encode(options[:class]).split(",").map(&:to_i)
-      client.filters << Riddle::Client::Filter.new("class_id", filter_value)
+      client.filters = [Riddle::Client::Filter.new("class_id", filter_value)]
     end
 
     results = client.query(query, options[:index])
@@ -34,7 +34,7 @@ module Dnif
       port = searchd["port"] || 3313
     end
 
-    client = Riddle::Client.new(address, port)
+    @client ||= Riddle::Client.new(address, port)
   end
 
   def self.config_path
