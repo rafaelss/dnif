@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dnif}
-  s.version = "0.0.1.alpha.7"
+  s.version = "0.0.1.beta.1"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rafael Souza"]
-  s.date = %q{2010-07-02}
+  s.date = %q{2010-07-14}
   s.description = %q{dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not only your table fields}
   s.email = %q{me@rafaelss.com}
   s.extra_rdoc_files = [
@@ -21,21 +21,32 @@ Gem::Specification.new do |s|
      "dnif.gemspec",
      "lib/dnif.rb",
      "lib/dnif/configuration.rb",
+     "lib/dnif/document.rb",
+     "lib/dnif/index.rb",
      "lib/dnif/index_builder.rb",
      "lib/dnif/indexer.rb",
      "lib/dnif/multi_attribute.rb",
+     "lib/dnif/schema.rb",
      "lib/dnif/search.rb",
      "lib/dnif/tasks.rb",
      "test/fixtures/db/schema.rb",
      "test/fixtures/log/searchd.pid",
      "test/fixtures/models.rb",
+     "test/fixtures/sphinx_1.xml",
+     "test/fixtures/sphinx_2.xml",
+     "test/fixtures/sphinx_3.xml",
+     "test/fixtures/sphinx_4.xml",
+     "test/fixtures/sphinx_5.xml",
      "test/fixtures/templates/config.erb",
      "test/test_helper.rb",
      "test/unit/test_configuration.rb",
      "test/unit/test_dnif.rb",
+     "test/unit/test_document.rb",
+     "test/unit/test_index.rb",
      "test/unit/test_index_builder.rb",
      "test/unit/test_indexer.rb",
      "test/unit/test_multi_attribute.rb",
+     "test/unit/test_schema.rb",
      "test/unit/test_search.rb"
   ]
   s.homepage = %q{http://github.com/rafaelss/dnif}
@@ -49,9 +60,12 @@ Gem::Specification.new do |s|
      "test/test_helper.rb",
      "test/unit/test_configuration.rb",
      "test/unit/test_dnif.rb",
+     "test/unit/test_document.rb",
+     "test/unit/test_index.rb",
      "test/unit/test_index_builder.rb",
      "test/unit/test_indexer.rb",
      "test/unit/test_multi_attribute.rb",
+     "test/unit/test_schema.rb",
      "test/unit/test_search.rb"
   ]
 
