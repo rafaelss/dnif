@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   define_index do
     field :name
+    attribute :active, :type => :boolean
   end
 end
 
@@ -54,6 +55,7 @@ end
 class Order < ActiveRecord::Base
 
   define_index do
+    field :title
     field :buyer
 
     where ["ordered_at >= ?", 2.months.ago]
@@ -63,6 +65,7 @@ end
 class Note < ActiveRecord::Base
 
   define_index do
+    field :title
     attribute :clicked, :type => :integer
     attribute :published_at, :type => :datetime
     attribute :expire_at, :type => :date

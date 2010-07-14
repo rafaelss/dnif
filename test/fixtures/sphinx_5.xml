@@ -1,0 +1,14 @@
+<sphinx:document id="11">
+  <name>
+    <![CDATA[Rafael Souza]]>
+  </name>
+  <full_name></full_name>
+  <title></title>
+  <buyer></buyer>
+  <class_id>1,2,3,4</class_id>
+  <active>true</active>
+  <clicked></clicked>
+  <published_at></published_at>
+  <expire_at></expire_at>
+  <points></points>
+</sphinx:document>

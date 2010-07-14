@@ -1,0 +1,14 @@
+<sphinx:document id="2967">
+  <name></name>
+  <full_name></full_name>
+  <title>
+    <![CDATA[Note Title]]>
+  </title>
+  <buyer></buyer>
+  <class_id>334,623,884,1125</class_id>
+  <active>true</active>
+  <clicked>10</clicked>
+  <published_at>{now}</published_at>
+  <expire_at>{expire}</expire_at>
+  <points>1000.0</points>
+</sphinx:document>

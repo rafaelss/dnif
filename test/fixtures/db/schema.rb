@@ -3,9 +3,10 @@ ActiveRecord::Schema.define(:version => 1) do
   create_table "comments", :force => true do |t|
     t.string :author
   end
-  
+
   create_table "users", :force => true do |t|
     t.string :name
+    t.boolean :active
   end
 
   create_table "people", :force => true do |t|
@@ -14,16 +15,17 @@ ActiveRecord::Schema.define(:version => 1) do
   end
 
   create_table "posts", :force => true do |t|
-    t.string :title
     t.datetime :published_at
     t.boolean :draft, :default => true
   end
 
-  create_table "sales", :force => true do |t|
+  create_table "orders", :force => true do |t|
+    t.string :title
     t.datetime :ordered_at
   end
 
   create_table "notes", :force => true do |t|
+    t.string :title
     t.integer :clicked
     t.datetime :published_at
     t.date :expire_at

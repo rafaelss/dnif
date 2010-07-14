@@ -1,0 +1,12 @@
+<sphinx:schema>
+  <sphinx:field name="name"/>
+  <sphinx:field name="full_name"/>
+  <sphinx:field name="title"/>
+  <sphinx:field name="buyer"/>
+  <sphinx:attr name="class_id" type="multi"/>
+  <sphinx:attr name="active" type="bool"/>
+  <sphinx:attr name="clicked" type="int"/>
+  <sphinx:attr name="published_at" type="timestamp"/>
+  <sphinx:attr name="expire_at" type="timestamp"/>
+  <sphinx:attr name="points" type="float"/>
+</sphinx:schema>

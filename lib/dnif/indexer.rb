@@ -2,88 +2,47 @@ module Dnif
   module Indexer
 
     def define_index(&block)
-      classes[self.name] = IndexBuilder.new(self, &block)
-      classes[self.name]
+      @@indexes ||= {}
+      @@indexes[self.name] = Dnif::Index.new(&block)
 
       include InstanceMethods
     end
 
-    def classes
-      @@classes ||= ActiveSupport::OrderedHash.new
+    def indexes
+      @@indexes
     end
 
     def to_sphinx
-      return nil if classes.blank?
+      return nil if indexes.blank?
 
-      returning('') do |xml|
-        builder = classes[self.name]
-        results = all(:conditions => builder.conditions)
+      xml = Builder::XmlMarkup.new(:indent => 2)
+      xml.instruct!
+      xml.sphinx(:docset) do
+        schema = Schema.new(self)
+        xml << schema.generate
 
-        xml << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<sphinx:docset>\n"
-
-        xml << "<sphinx:schema>\n"
-        builder.fields.each do |name|
-          xml << "  <sphinx:field name=\"#{name}\"/>\n"
-        end
-
-        xml << "  <sphinx:attr name=\"class_id\" type=\"multi\"/>\n"
-        builder.attributes.each do |name, type|
-          xml << "  <sphinx:attr name=\"#{name}\" "
-
-          case type
-          when :integer
-            xml << "type=\"int\""
-          when :date, :datetime
-            xml << "type=\"timestamp\""
-          when :boolean
-            xml << "type=\"bool\""
-          when :float
-            xml << "type=\"float\""
-          end
-
-          xml << "/>\n"
-        end
-
-        xml << "</sphinx:schema>\n"
-
+        results = all(:conditions => indexes[self.name].conditions)
         results.each do |object|
-          xml << object.to_sphinx
+          document = Document.new(object)
+          xml << document.generate
         end
-        xml << "</sphinx:docset>"
       end
+      xml.target!
     end
 
     module InstanceMethods
 
+      def indexes
+        self.class.indexes
+      end
+
+      def index
+        self.class.indexes[self.class.name]
+      end
+
       def to_sphinx
-        builder = ActiveRecord::Base.classes[self.class.name]
-        if not builder.nil?
-          class_id = Dnif::MultiAttribute.encode(self.class.name)
-          sphinx_id = id + class_id.split(',').sum { |c| c.to_i }
-          xml = "<sphinx:document id=\"#{sphinx_id}\">\n"
-
-          builder.fields.each do |field|
-            xml << "  <#{field}><![CDATA[[#{send(field)}]]></#{field}>\n"
-          end
-
-          xml << "  <class_id>#{class_id}</class_id>\n"
-
-          builder.attributes.each do |name, type|
-            value = send(name)
-
-            if [:date, :datetime].include?(builder.attributes[name])
-              if value.is_a?(Date)
-                value = value.to_datetime
-              end
-
-              value = value.to_i
-            end
-
-            xml << "  <#{name}>#{value}</#{name}>\n"
-          end
-
-          xml << "</sphinx:document>\n"
-        end
+        document = Document.new(self)
+        document.generate
       end
     end
   end

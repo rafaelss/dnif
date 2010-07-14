@@ -17,8 +17,7 @@ module Dnif
     end
 
     def self.sources
-      classes = ActiveRecord::Base.classes.keys
-      classes.each do |class_name|
+      ActiveRecord::Base.indexes.keys.each do |class_name|
         name = class_name.underscore.pluralize + "_main"
         yield name, class_name
       end

@@ -5,7 +5,10 @@ require 'active_support'
 require 'riddle'
 
 require "dnif/configuration"
-require "dnif/index_builder"
+require "dnif/index_builder" # TODO remove
+require "dnif/index"
+require "dnif/schema"
+require "dnif/document"
 require "dnif/indexer"
 require "dnif/multi_attribute"
 require "dnif/search"
