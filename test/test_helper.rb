@@ -6,6 +6,9 @@ require "test/unit"
 require "mocha"
 require "active_record"
 
+require 'database_cleaner'
+DatabaseCleaner.strategy = :transaction
+
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require "dnif"
 
