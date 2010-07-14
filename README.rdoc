@@ -2,24 +2,24 @@
 
 dnif is the new find... for sphinx
 
-dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not only your table fields
+dnif is a gem to index data using ActiveRecord finders (for now), letting you index custom methods and not only table columns
 
 == Usage
 
   require "dnif"
 
-  class Post < ActiveRecord::Base
+  class User < ActiveRecord::Base
 
     define_index do
-      field :title
-      field :body
-      attribute :published_at, :type => :datetime
+      field :full_name
+      field :email
+      attribute :created_at, :type => :datetime
 
-      where ["draft = ?", false]
+      where ["active = ?", false]
     end
 
-    def slug
-      self.title.parameterize
+    def full_name
+      self.first_name + " " + self.last_name
     end
   end
 
@@ -27,7 +27,7 @@ dnif is a gem to index data using ActiveRecord finders, letting you index your c
   rake dnif:index
   rake dnif:start
 
-  Post.search("dnif")
+  User.search("Rafael Souza")
 
 == TODO
 
@@ -36,6 +36,8 @@ dnif is a gem to index data using ActiveRecord finders, letting you index your c
 - Try to remove ActiveRecord dependency, making it work with others ORMs/ODMs/etc
 - Documentation
 - Improve test suite
+- Index in chunks
+- Support to delta index (or something like that)
 
 == Maintainer
 
