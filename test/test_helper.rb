@@ -5,6 +5,7 @@
 require "test/unit"
 require "mocha"
 require "active_record"
+require "ap"
 
 require 'database_cleaner'
 DatabaseCleaner.strategy = :transaction
