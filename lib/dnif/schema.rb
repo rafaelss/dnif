@@ -8,16 +8,6 @@ module Dnif
     def generate
       xml = Builder::XmlMarkup.new(:indent => 2)
       xml.sphinx(:schema) do
-        # fields = @klass.indexes[@klass.name].fields.map do |name|
-        #   xml.sphinx(:field, :name => name)
-        #   name
-        # end
-        # 
-        # attributes = @klass.indexes[@klass.name].attributes.map do |name, type|
-        #   xml.sphinx(:attr, :name => name, :type => attribute_type(type))
-        #   name
-        # end
-
         fields = []
         @klass.indexes.values.each do |index|
           (index.fields - fields).each do |name|
@@ -26,7 +16,8 @@ module Dnif
           end
         end
 
-        xml.sphinx(:attr, :name => "class_id", :type => "multi")
+        xml.sphinx(:attr, :name => "class_id", :type => "int")
+        xml.sphinx(:attr, :name => "class_name", :type => "multi")
 
         attributes = []
         @klass.indexes.values.each do |index|

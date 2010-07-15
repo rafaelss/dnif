@@ -23,7 +23,8 @@ module Dnif
           end
         end
 
-        xml.class_id(class_id)
+        xml.class_id(@object.indexes.keys.index(@object.class.name))
+        xml.class_name(encoded_class_name)
 
         attributes = []
         @object.indexes.values.each do |index|
@@ -53,12 +54,12 @@ module Dnif
 
     private
 
-    def class_id
-      @class_id ||= Dnif::MultiAttribute.encode(@object.class.name)
+    def encoded_class_name
+      @encoded_class_name ||= Dnif::MultiAttribute.encode(@object.class.name)
     end
 
     def document_id
-      @object.id + class_id.split(',').sum { |c| c.to_i }
+      @object.id + encoded_class_name.split(',').sum { |c| c.to_i }
     end
   end
 end

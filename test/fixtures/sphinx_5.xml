@@ -5,7 +5,8 @@
   <full_name></full_name>
   <title></title>
   <buyer></buyer>
-  <class_id>1,2,3,4</class_id>
+  <class_id>0</class_id>
+  <class_name>1,2,3,4</class_name>
   <active>true</active>
   <clicked></clicked>
   <published_at></published_at>

@@ -5,7 +5,8 @@
   <sphinx:field name="full_name"/>
   <sphinx:field name="title"/>
   <sphinx:field name="buyer"/>
-  <sphinx:attr name="class_id" type="multi"/>
+  <sphinx:attr name="class_id" type="int"/>
+  <sphinx:attr name="class_name" type="multi"/>
   <sphinx:attr name="active" type="bool"/>
   <sphinx:attr name="clicked" type="int"/>
   <sphinx:attr name="published_at" type="timestamp"/>

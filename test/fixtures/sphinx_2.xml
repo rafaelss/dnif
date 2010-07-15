@@ -5,7 +5,8 @@
     <![CDATA[Note Title]]>
   </title>
   <buyer></buyer>
-  <class_id>334,623,884,1125</class_id>
+  <class_id>3</class_id>
+  <class_name>334,623,884,1125</class_name>
   <active>true</active>
   <clicked>10</clicked>
   <published_at>{now}</published_at>

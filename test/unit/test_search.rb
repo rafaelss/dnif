@@ -40,12 +40,12 @@ class TestSearch < Test::Unit::TestCase
       :matches => [{
         :doc => 2983,
         :attributes => {
-          "class_id" => "336,623,883,1140"
+          "class_name" => "336,623,883,1140"
         }
       }, {
         :doc => 7893,
         :attributes => {
-          "class_id" => "323,623,877,1133,1381,1646,1908"
+          "class_name" => "323,623,877,1133,1381,1646,1908"
         }
       }]
     }
