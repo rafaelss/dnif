@@ -11,6 +11,23 @@ class TestIndexer < Test::Unit::TestCase
     DatabaseCleaner.clean
   end
 
+  test ".define_index" do
+    klass = Class.new
+    klass.extend(Dnif::Indexer)
+    klass.stubs(:name).returns("Klass")
+    klass.define_index do
+      field :a
+      attribute :b, :type => :integer
+      where "c"
+    end
+
+    assert_equal [:a], klass.indexes["Klass"].fields
+    assert_equal({ :b => :integer }, klass.indexes["Klass"].attributes)
+    assert_equal "c", klass.indexes["Klass"].conditions
+
+    klass.indexes.delete("Klass")
+  end
+
   test "objects without index should not have dnif included" do
     assert_false Post.new.respond_to?(:to_sphinx)
     assert_false Post.respond_to?(:to_sphinx)
