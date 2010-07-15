@@ -1,9 +1,10 @@
 module Dnif
   module Indexer
 
+    @@indexes ||= {}
+
     def define_index(&block)
-      @@indexes ||= {}
-      @@indexes[self.name] = Dnif::Index.new(&block)
+      indexes[self.name] = Dnif::Index.new(&block)
 
       include InstanceMethods
     end
@@ -48,4 +49,4 @@ module Dnif
   end
 end
 
-ActiveRecord::Base.extend(Dnif::Indexer)
+ActiveRecord::Base.extend(Dnif::Indexer) if defined?(ActiveRecord::Base)
