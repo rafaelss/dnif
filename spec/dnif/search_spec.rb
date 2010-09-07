@@ -1,116 +1,126 @@
 # encoding: utf-8
-require 'test_helper'
+require 'spec_helper'
 
-class TestSearch < Test::Unit::TestCase
+describe Dnif::Search do
 
-  test ".config_path with nil root_path" do
-    File.expects(:expand_path).returns("/expanded/path")
-    Dnif.expects(:root_path).twice.returns(nil, ".")
-    Dnif.expects(:root_path=).with("/expanded/path")
-    Dnif.expects(:environment).returns("development")
+  describe ".config_path" do
 
-    assert_equal "./config/sphinx/development.erb", Dnif.config_path
+    it "should return '.' when not specified" do
+      File.should_receive(:expand_path).and_return("/expanded/path")
+      Dnif.should_receive(:root_path).twice.and_return(nil, ".")
+      Dnif.should_receive(:root_path=).with("/expanded/path")
+      Dnif.should_receive(:environment).and_return("development")
+
+      Dnif.config_path.should == "./config/sphinx/development.erb"
+    end
+
+    it "should return specified root_path" do
+      Dnif.should_receive(:root_path).twice.and_return("/root/path", "/root/path")
+      Dnif.should_receive(:environment).and_return("development")
+
+      Dnif.config_path.should == "/root/path/config/sphinx/development.erb"
+    end
   end
 
-  test ".config_path with defined root_path" do
-    Dnif.expects(:root_path).twice.returns("/root/path", "/root/path")
-    Dnif.expects(:environment).returns("development")
+  describe ".client" do
 
-    assert_equal "/root/path/config/sphinx/development.erb", Dnif.config_path
+    it "should understand 'listen' sphinx setting" do
+      Dnif.should_receive(:config_path).and_return("config/path.erb")
+      Dnif::Configuration.should_receive(:options_for).with("searchd", "config/path.erb").and_return({ "listen" => "127.0.0.1:3313" })
+      Riddle::Client.should_receive(:new).with("127.0.0.1", "3313")
+
+      Dnif.client
+    end
+
+    it "should understand 'address' and 'port' sphinx setting" do
+      Dnif.should_receive(:config_path).and_return("config/path.erb")
+      Dnif::Configuration.should_receive(:options_for).with("searchd", "config/path.erb").and_return({ "address" => "127.0.0.1", "port" => "3313" })
+      Riddle::Client.should_receive(:new).with("127.0.0.1", "3313")
+
+      Dnif.client
+    end
   end
 
-  test ".client when config uses listen" do
-    Dnif.expects(:config_path).returns("config/path.erb")
-    Dnif::Configuration.expects(:options_for).with("searchd", "config/path.erb").returns({ "listen" => "127.0.0.1:3313" })
-    Riddle::Client.expects(:new).with("127.0.0.1", "3313")
+  describe ".search" do
 
-    Dnif.client
+    it "should search for all models" do
+      results = {
+        :matches => [{
+                       :doc => 2983,
+                       :attributes => {
+                         "class_name" => "336,623,883,1140"
+                       }
+                     }, {
+                       :doc => 7893,
+                       :attributes => {
+                         "class_name" => "323,623,877,1133,1381,1646,1908"
+                       }
+        }]
+      }
+
+      riddle = mock("Riddle")
+      riddle.should_receive(:query).with("my search", "*").and_return(results)
+      Dnif.should_receive(:client).and_return(riddle)
+      Post.should_receive(:find_all_by_id).once.with([1])
+      Comment.should_receive(:find_all_by_id).once.with([2])
+
+      Dnif.search("my search")
+    end
+
+    it "should search specific models" do
+      riddle = mock("Riddle")
+      riddle.should_receive(:query).with("post", "*").and_return(results_for_post)
+      riddle.should_receive(:query).with("comment", "*").and_return(results_for_comment)
+      riddle.should_receive(:filters=).twice.and_return([])
+      Dnif.should_receive(:client).exactly(4).times.and_return(riddle)
+
+      ActiveRecord::Base.should_receive(:indexes).twice.and_return({ "Post" => mock, "Comment" => mock })
+
+      Riddle::Client::Filter.should_receive(:new).with("class_id", [0])
+      Riddle::Client::Filter.should_receive(:new).with("class_id", [1])
+
+      Post.should_receive(:find_all_by_id).once.with([1])
+      Comment.should_receive(:find_all_by_id).once.with([2])
+
+      Post.search("post")
+      Comment.search("comment")
+    end
+
+    it "should search only specified models" do
+      riddle = mock("Riddle")
+      riddle.should_receive(:query).with("post", "*").and_return(results_for_post)
+      riddle.should_receive(:filters=).and_return([])
+      Dnif.should_receive(:client).exactly(2).times.and_return(riddle)
+
+      ActiveRecord::Base.should_receive(:indexes).and_return({ "Post" => mock })
+
+      Riddle::Client::Filter.should_receive(:new).with("class_id", [0])
+      Post.should_receive(:find_all_by_id).once.with([1])
+
+      Dnif.search("post", :classes => "Post")
+    end
   end
 
-  test ".client when config uses address and port" do
-    Dnif.expects(:config_path).returns("config/path.erb")
-    Dnif::Configuration.expects(:options_for).with("searchd", "config/path.erb").returns({ "address" => "127.0.0.1", "port" => "3313" })
-    Riddle::Client.expects(:new).with("127.0.0.1", "3313")
+  private
+    def results_for_post
+      {
+        :matches => [{
+                       :doc => 2983,
+                       :attributes => {
+                         "class_name" => "336,623,883,1140"
+                       }
+        }]
+      }
+    end
 
-    Dnif.client
-  end
-
-  test ".search" do
-    results = {
-      :matches => [{
-        :doc => 2983,
-        :attributes => {
-          "class_name" => "336,623,883,1140"
-        }
-      }, {
-        :doc => 7893,
-        :attributes => {
-          "class_name" => "323,623,877,1133,1381,1646,1908"
-        }
-      }]
-    }
-
-    riddle = mock("Riddle")
-    riddle.expects(:query).with("my search", "*").returns(results)
-    Dnif.expects(:client).returns(riddle)
-    Post.expects(:find_all_by_id).once.with([1])
-    Comment.expects(:find_all_by_id).once.with([2])
-
-    Dnif.search("my search")
-  end
-
-  test ".search through models" do
-    riddle = mock("Riddle")
-    riddle.expects(:query).with("post", "*").returns(results_for_post)
-    riddle.expects(:query).with("comment", "*").returns(results_for_comment)
-    riddle.expects(:filters=).twice.returns([])
-    Dnif.expects(:client).times(4).returns(riddle)
-
-    ActiveRecord::Base.expects(:indexes).twice.returns({ "Post" => mock, "Comment" => mock })
-
-    Riddle::Client::Filter.expects(:new).with("class_id", [0])
-    Riddle::Client::Filter.expects(:new).with("class_id", [1])
-
-    Post.expects(:find_all_by_id).once.with([1])
-    Comment.expects(:find_all_by_id).once.with([2])
-
-    Post.search("post")
-    Comment.search("comment")
-  end
-
-  test "search only in specified models" do
-    riddle = mock("Riddle")
-    riddle.expects(:query).with("post", "*").returns(results_for_post)
-    riddle.expects(:filters=).returns([])
-    Dnif.expects(:client).times(2).returns(riddle)
-
-    ActiveRecord::Base.expects(:indexes).returns({ "Post" => mock })
-
-    Riddle::Client::Filter.expects(:new).with("class_id", [0])
-    Post.expects(:find_all_by_id).once.with([1])
-
-    Dnif.search("post", :classes => "Post")
-  end
-
-  def results_for_post
-    {
-      :matches => [{
-        :doc => 2983,
-        :attributes => {
-          "class_name" => "336,623,883,1140"
-        }
-      }]
-    }
-  end
-
-  def results_for_comment
-    {
-      :matches => [{
-        :doc => 7893,
-        :attributes => {
-          "class_name" => "323,623,877,1133,1381,1646,1908"
-        }
-      }]
-    }
-  end
+    def results_for_comment
+      {
+        :matches => [{
+                       :doc => 7893,
+                       :attributes => {
+                         "class_name" => "323,623,877,1133,1381,1646,1908"
+                       }
+        }]
+      }
+    end
 end

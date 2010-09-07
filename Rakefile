@@ -1,6 +1,7 @@
-begin
-  require 'jeweler'
+require "bundler"
+Bundler.require(:rake)
 
+begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "dnif"
     gemspec.summary = "dnif is the new find... for sphinx"
@@ -28,11 +29,5 @@ end
 
 Jeweler::GemcutterTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.test_files = FileList.new('test/**/test_*.rb') do |list|
-    list.exclude 'test/test_helper.rb'
-  end
-  test.libs << 'test'
-  test.verbose = true
-end
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new(:spec)

@@ -1,76 +1,31 @@
 # encoding: utf-8
-
-# $:.unshift(File.dirname(__FILE__) + "/../../lib/")
-
-require "test/unit"
-require "mocha"
-require "active_record"
-require "ap"
-
-require 'database_cleaner'
-DatabaseCleaner.strategy = :transaction
+require "bundler"
+Bundler.require(:default, :test)
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require "dnif"
 
-Dnif.root_path = File.expand_path(File.dirname(__FILE__) + "/fixtures")
+# Requires supporting files with custom matchers and macros, etc,
+# in ./support/ and its subdirectories.
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f }
 
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
-silence_stream(STDOUT) { load "fixtures/db/schema.rb" }
+RSpec.configure do |config|
+  config.mock_with :rspec
 
-class Post
+  config.before(:suite) do
+    Dnif.root_path = File.expand_path(File.dirname(__FILE__) + "/fixtures")
 
-  extend Dnif::Search
-end
+    ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+    silence_stream(STDOUT) { load "fixtures/db/schema.rb" }
 
-class Comment
-
-  extend Dnif::Search
-end
-
-class User < ActiveRecord::Base
-
-  define_index do
-    field :name
-    attribute :active, :type => :boolean
-  end
-end
-
-class Category < ActiveRecord::Base
-end
-
-class Property < ActiveRecord::Base
-end
-
-class Person < ActiveRecord::Base
-
-  define_index do
-    field :full_name
+    DatabaseCleaner.strategy = :transaction
   end
 
-  def full_name
-    "#{self.first_name} #{self.last_name}"
+  config.before(:each) do
+    DatabaseCleaner.start
   end
-end
 
-class Order < ActiveRecord::Base
-
-  define_index do
-    field :title
-    field :buyer
-
-    where ["ordered_at >= ?", 2.months.ago]
-  end
-end
-
-class Note < ActiveRecord::Base
-
-  define_index do
-    field :title
-    attribute :clicked, :type => :integer
-    attribute :published_at, :type => :datetime
-    attribute :expire_at, :type => :date
-    attribute :active, :type => :boolean
-    attribute :points, :type => :float
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 end

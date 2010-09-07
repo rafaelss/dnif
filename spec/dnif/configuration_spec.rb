@@ -1,37 +1,41 @@
 # encoding: utf-8
-require 'test_helper'
+require 'spec_helper'
 require 'erb'
 
-class TestConfiguration < Test::Unit::TestCase
+describe Dnif::Configuration do
 
-  test "generate configuration from default template" do
-    File.expects(:read).with("config/path.erb").returns("configurations")
+  it "should generate configuration from default template" do
+    File.should_receive(:read).with("config/path.erb").and_return("configurations")
 
     template = mock("Template")
-    template.expects(:result).returns('output')
-    ERB.expects(:new).with("configurations").returns(template)
+    template.should_receive(:result).and_return('output')
+    ERB.should_receive(:new).with("configurations").and_return(template)
 
     file = mock
-    file.expects(:puts).with('output')
-    File.expects(:open).with(Dnif.root_path + "/config/sphinx/development.conf", "w").yields(file)
+    file.should_receive(:puts).with('output')
+    File.should_receive(:open).with(Dnif.root_path + "/config/sphinx/development.conf", "w").and_yield(file)
 
-    Dnif::Configuration.generate("config/path.erb")
+    path = Dnif::Configuration.generate("config/path.erb")
+    path.should == File.join(Dnif.root_path, "config", "sphinx", "development.conf")
   end
 
-  test "sources should iterate over all indexed classes" do
-    names = []
-    classes = []
-    Dnif::Configuration.sources do |name, class_name|
-      names << name
-      classes << class_name
+  describe "helpers" do
+
+    it "should iterate over all indexed classes" do
+      names = []
+      classes = []
+      Dnif::Configuration.sources do |name, class_name|
+        names << name
+        classes << class_name
+      end
+
+      names.should == ["users_main", "people_main", "orders_main", "notes_main"]
+      classes.should == ["User", "Person", "Order", "Note"]
     end
-
-    assert_equal ["users_main", "people_main", "orders_main", "notes_main"], names
-    assert_equal ["User", "Person", "Order", "Note"], classes
   end
 
-  test ".options_for" do
+  it ".options_for" do
     client = Dnif::Configuration.options_for("searchd", File.join(Dnif.root_path, "templates", "config.erb"))
-    assert client.is_a?(Hash)
+    client.should be_kind_of(Hash)
   end
 end

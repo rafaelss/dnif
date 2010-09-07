@@ -1,21 +1,20 @@
 # encoding: utf-8
-require 'test_helper'
+require 'spec_helper'
 
-class TestIndex < Test::Unit::TestCase
+describe Dnif::Index do
 
-  test "field definition" do
+  it "should define a field" do
     index = Dnif::Index.new(&proc { field :name })
-    assert_equal [:name], index.fields
+    index.fields.should == [ :name ]
   end
 
-  test "attribute definition" do
+  it "should define an attribute" do
     index = Dnif::Index.new(&proc { attribute :another, :type => :bool })
-    expected = { :another => :bool }
-    assert_equal expected, index.attributes
+    index.attributes.should == { :another => :bool }
   end
 
-  test "where definition" do
+  it "should define where clause" do
     index = Dnif::Index.new(&proc { where "field = 'value'" })
-    assert_equal "field = 'value'", index.conditions
+    index.conditions.should == "field = 'value'"
   end
 end

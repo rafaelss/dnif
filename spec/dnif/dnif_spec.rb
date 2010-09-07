@@ -1,21 +1,35 @@
 # encoding: utf-8
-require 'test_helper'
+require 'spec_helper'
 
-class TestDnif < Test::Unit::TestCase
+describe Dnif do
 
-  test ".root_path" do
+  after(:each) do
+    Dnif.instance_variable_set(:"@root_path", nil)
+    Dnif.instance_variable_set(:"@environment", nil)
+    Dnif.instance_variable_set(:"@models_path", nil)
+  end
+
+  it ".root_path" do
     Dnif.root_path = "/root/path"
-    assert_equal "/root/path", Dnif.root_path
+    Dnif.root_path.should == "/root/path"
   end
 
-  test ".environment" do
-    assert_equal "development", Dnif.environment
+  it ".environment" do
+    Dnif.environment.should == "development"
+
     Dnif.environment = "production"
-    assert_equal "production", Dnif.environment
+    Dnif.environment.should == "production"
   end
 
-  test ".models_path" do
+  it "should have .environment aliased by .env" do
+    Dnif.env.should == "development"
+
+    Dnif.env = "production"
+    Dnif.env.should == "production"
+  end
+
+  it ".models_path" do
     Dnif.models_path = "/models/path"
-    assert_equal "/models/path", Dnif.models_path
+    Dnif.models_path.should == "/models/path"
   end
 end

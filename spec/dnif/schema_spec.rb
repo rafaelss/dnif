@@ -1,11 +1,11 @@
 # encoding: utf-8
-require 'test_helper'
+require 'spec_helper'
 
-class TestSchema < Test::Unit::TestCase
+describe Dnif::Schema do
 
-  test ".generate" do
+  it ".generate" do
     schema = Dnif::Schema.new(User)
     expected = File.read(File.dirname(__FILE__) + "/../fixtures/sphinx_4.xml")
-    assert_equal expected, schema.generate
+    schema.generate.should == expected
   end
 end
