@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dnif}
-  s.version = "0.0.1.beta.4"
+  s.version = "0.0.1.beta.5"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rafael Souza"]
@@ -84,6 +84,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<riddle>, [">= 1.1.0"])
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
+      s.add_runtime_dependency(%q<awesome_print>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
       s.add_development_dependency(%q<database_cleaner>, [">= 0"])
@@ -95,6 +96,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_dependency(%q<riddle>, [">= 1.1.0"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
+      s.add_dependency(%q<awesome_print>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
       s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
       s.add_dependency(%q<database_cleaner>, [">= 0"])
@@ -107,6 +109,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<activesupport>, [">= 3.0.0"])
     s.add_dependency(%q<riddle>, [">= 1.1.0"])
     s.add_dependency(%q<builder>, [">= 2.1.2"])
+    s.add_dependency(%q<awesome_print>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
     s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
     s.add_dependency(%q<database_cleaner>, [">= 0"])
