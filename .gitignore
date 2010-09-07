@@ -2,3 +2,5 @@
 *.gem
 pkg
 .bundle/config
+lib/dnif/output.rb
+spec/dnif/output_spec.rb
