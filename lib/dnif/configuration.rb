@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'dnif'
 
 module Dnif
 
@@ -11,9 +10,11 @@ module Dnif
 
       # TODO turn "db/sphinx" and "config/sphinx" configurable
       FileUtils.mkdir_p(File.join(Dnif.root_path, "db", "sphinx", Dnif.environment))
-      File.open(Dnif.root_path + "/config/sphinx/" + Dnif.environment + ".conf", "w") do |f|
+      path = File.join(Dnif.root_path, "config", "sphinx", Dnif.environment + ".conf")
+      File.open(path, "w") do |f|
         f.puts output
       end
+      path
     end
 
     def self.sources
@@ -38,7 +39,7 @@ module Dnif
         section.gsub!(/^\s*(.*?)\s*(?:#.*)?$/, '\1')
 
         # Convert to a hash
-        returning({}) do |options|
+        {}.tap do |options|
           lines = section.split(/\n+/)
           while line = lines.shift
             if line =~ /(.*?)\s*=\s*(.*)/

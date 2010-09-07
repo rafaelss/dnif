@@ -1,45 +1,45 @@
 # encoding: utf-8
-
-require 'active_record'
-require 'active_support'
-require 'riddle'
-
-require "dnif/configuration"
-require "dnif/index_builder" # TODO remove
-require "dnif/index"
-require "dnif/schema"
-require "dnif/document"
-require "dnif/indexer"
-require "dnif/multi_attribute"
-require "dnif/search"
+require "bundler"
+Bundler.require(:default)
 
 module Dnif
+  extend self
 
-  def self.root_path
+  autoload :Configuration, "dnif/configuration"
+  autoload :Index, "dnif/index"
+  autoload :Schema, "dnif/schema"
+  autoload :Document, "dnif/document"
+  autoload :Indexer, "dnif/indexer"
+  autoload :MultiAttribute, "dnif/multi_attribute"
+  autoload :Search, "dnif/search"
+
+  def root_path
     @root_path
   end
 
-  def self.root_path=(value)
+  def root_path=(value)
     @root_path = value
   end
 
-  def self.environment
+  def environment
     @environment || 'development'
   end
+  alias :env :environment
 
-  def self.environment=(value)
+  def environment=(value)
     @environment = value
   end
+  alias :env= :environment=
 
-  def self.models_path
+  def models_path
     @models_path
   end
 
-  def self.models_path=(value)
+  def models_path=(value)
     @models_path = value
   end
 
-  def self.load_models
+  def load_models
     models = Dir["#{self.models_path}/*.rb"]
     models.map! do |filename|
       filename = File.basename(filename, '.rb')
@@ -48,8 +48,4 @@ module Dnif
   end
 end
 
-if defined?(Rails)
-  Dnif.root_path = RAILS_ROOT
-  Dnif.environment = RAILS_ENV
-  Dnif.models_path = File.join(RAILS_ROOT, "app", "models")
-end
+ActiveRecord::Base.extend(Dnif::Indexer) if defined?(ActiveRecord::Base)

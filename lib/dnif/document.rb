@@ -13,7 +13,7 @@ module Dnif
           (index.fields - fields).each do |name|
             if @object.index.fields.include?(name)
               xml.tag!(name) do
-                xml.cdata!(@object.send(name))
+                xml.cdata!(@object.send(name).to_s)
               end
             else
               xml.tag!(name, "")
@@ -52,14 +52,14 @@ module Dnif
       xml.target!
     end
 
-    private
-
-    def encoded_class_name
-      @encoded_class_name ||= Dnif::MultiAttribute.encode(@object.class.name)
-    end
-
     def document_id
       @object.id + encoded_class_name.split(',').sum { |c| c.to_i }
     end
+
+    private
+
+      def encoded_class_name
+        @encoded_class_name ||= Dnif::MultiAttribute.encode(@object.class.name)
+      end
   end
 end

@@ -48,5 +48,3 @@ module Dnif
     end
   end
 end
-
-ActiveRecord::Base.extend(Dnif::Indexer) if defined?(ActiveRecord::Base)

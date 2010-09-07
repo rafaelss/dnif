@@ -1,6 +1,10 @@
-require 'active_support'
 require 'fileutils'
-require 'dnif'
+
+if defined?(Rails)
+  Dnif.root_path = Rails.root
+  Dnif.environment = Rails.env
+  Dnif.models_path = File.join(Rails.root, "app", "models")
+end
 
 def controller
   require 'riddle'
@@ -16,12 +20,6 @@ def controller
 end
 
 namespace :dnif do
-
-  task :environment do
-    if task = Rake::Task[:environment]
-      task.invoke
-    end
-  end
 
   desc "Generates the configuration file needed for sphinx"
   task :configure => :environment do
@@ -44,7 +42,8 @@ namespace :dnif do
     end
 
     Dnif.load_models
-    Dnif::Configuration.generate(base_path)
+    path = Dnif::Configuration.generate(base_path)
+    puts "Config file generated: #{path}"
   end
 
   desc "Generates the XML used by sphinx to create indexes"
