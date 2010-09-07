@@ -5,6 +5,7 @@ gem "activerecord", ">= 3.0.0", :require => "active_record"
 gem "activesupport", ">= 3.0.0", :require => "active_support"
 gem "riddle", ">= 1.1.0"
 gem "builder", ">= 2.1.2"
+gem "awesome_print", :require => "ap"
 
 group :development do
   gem "jeweler", ">= 1.5.0.pre2"

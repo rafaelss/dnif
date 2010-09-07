@@ -44,7 +44,7 @@ namespace :dnif do
 
     Dnif.load_models
     path = Dnif::Configuration.generate(base_path)
-    puts "Config file generated: #{path}"
+    ap "\n> config generated: #{path}"
   end
 
   desc "Generates the XML used by sphinx to create indexes"
@@ -59,16 +59,19 @@ namespace :dnif do
   desc "Index data for sphinx"
   task :index => :environment do
     controller.index(:verbose => true)
+    ap "\n> data indexed"
   end
 
   desc "Stop sphinx daemon"
   task :stop => :environment do
     controller.stop
+    ap "\n> daemon stopped"
   end
 
   desc "Start sphinx daemon"
   task :start => :environment do
     controller.start
+    ap "\n> daemon started"
   end
 
   desc "Rebuild sphinx index"
