@@ -16,38 +16,62 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
+    ".gitignore",
+    ".rspec",
+    "Gemfile",
+    "Gemfile.lock",
     "README.rdoc",
-     "Rakefile",
-     "dnif.gemspec",
-     "lib/dnif.rb",
-     "lib/dnif/configuration.rb",
-     "lib/dnif/document.rb",
-     "lib/dnif/index.rb",
-     "lib/dnif/indexer.rb",
-     "lib/dnif/multi_attribute.rb",
-     "lib/dnif/schema.rb",
-     "lib/dnif/search.rb",
-     "lib/dnif/tasks.rb"
+    "Rakefile",
+    "dnif.gemspec",
+    "lib/dnif.rb",
+    "lib/dnif/configuration.rb",
+    "lib/dnif/document.rb",
+    "lib/dnif/index.rb",
+    "lib/dnif/indexer.rb",
+    "lib/dnif/multi_attribute.rb",
+    "lib/dnif/schema.rb",
+    "lib/dnif/search.rb",
+    "lib/dnif/tasks.rb",
+    "lib/dnif/version.rb",
+    "spec/dnif/configuration_spec.rb",
+    "spec/dnif/dnif_spec.rb",
+    "spec/dnif/document_spec.rb",
+    "spec/dnif/index_spec.rb",
+    "spec/dnif/indexer_spec.rb",
+    "spec/dnif/multi_attribute_spec.rb",
+    "spec/dnif/schema_spec.rb",
+    "spec/dnif/search_spec.rb",
+    "spec/fixtures/db/schema.rb",
+    "spec/fixtures/log/searchd.pid",
+    "spec/fixtures/models.rb",
+    "spec/fixtures/sphinx_1.xml",
+    "spec/fixtures/sphinx_2.xml",
+    "spec/fixtures/sphinx_3.xml",
+    "spec/fixtures/sphinx_4.xml",
+    "spec/fixtures/sphinx_5.xml",
+    "spec/fixtures/templates/config.erb",
+    "spec/spec_helper.rb",
+    "spec/support/activerecord/models.rb",
+    "templates/config.erb"
   ]
   s.has_rdoc = false
   s.homepage = %q{http://github.com/rafaelss/dnif}
-  s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{dnif is the new find... for sphinx}
   s.test_files = [
     "spec/dnif/configuration_spec.rb",
-     "spec/dnif/dnif_spec.rb",
-     "spec/dnif/document_spec.rb",
-     "spec/dnif/index_spec.rb",
-     "spec/dnif/indexer_spec.rb",
-     "spec/dnif/multi_attribute_spec.rb",
-     "spec/dnif/schema_spec.rb",
-     "spec/dnif/search_spec.rb",
-     "spec/fixtures/db/schema.rb",
-     "spec/fixtures/models.rb",
-     "spec/spec_helper.rb",
-     "spec/support/activerecord/models.rb"
+    "spec/dnif/dnif_spec.rb",
+    "spec/dnif/document_spec.rb",
+    "spec/dnif/index_spec.rb",
+    "spec/dnif/indexer_spec.rb",
+    "spec/dnif/multi_attribute_spec.rb",
+    "spec/dnif/schema_spec.rb",
+    "spec/dnif/search_spec.rb",
+    "spec/fixtures/db/schema.rb",
+    "spec/fixtures/models.rb",
+    "spec/spec_helper.rb",
+    "spec/support/activerecord/models.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -55,18 +79,39 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activerecord>, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
-      s.add_runtime_dependency(%q<riddle>, [">= 0"])
+      s.add_runtime_dependency(%q<rake>, [">= 0"])
+      s.add_runtime_dependency(%q<activerecord>, [">= 3.0.0"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0"])
+      s.add_runtime_dependency(%q<riddle>, [">= 1.1.0"])
+      s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
+      s.add_development_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+      s.add_development_dependency(%q<database_cleaner>, [">= 0"])
+      s.add_development_dependency(%q<awesome_print>, [">= 0"])
+      s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
     else
-      s.add_dependency(%q<activerecord>, [">= 0"])
-      s.add_dependency(%q<activesupport>, [">= 0"])
-      s.add_dependency(%q<riddle>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0"])
+      s.add_dependency(%q<activerecord>, [">= 3.0.0"])
+      s.add_dependency(%q<activesupport>, [">= 3.0.0"])
+      s.add_dependency(%q<riddle>, [">= 1.1.0"])
+      s.add_dependency(%q<builder>, [">= 2.1.2"])
+      s.add_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+      s.add_dependency(%q<database_cleaner>, [">= 0"])
+      s.add_dependency(%q<awesome_print>, [">= 0"])
+      s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
     end
   else
-    s.add_dependency(%q<activerecord>, [">= 0"])
-    s.add_dependency(%q<activesupport>, [">= 0"])
-    s.add_dependency(%q<riddle>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0"])
+    s.add_dependency(%q<activerecord>, [">= 3.0.0"])
+    s.add_dependency(%q<activesupport>, [">= 3.0.0"])
+    s.add_dependency(%q<riddle>, [">= 1.1.0"])
+    s.add_dependency(%q<builder>, [">= 2.1.2"])
+    s.add_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+    s.add_dependency(%q<database_cleaner>, [">= 0"])
+    s.add_dependency(%q<awesome_print>, [">= 0"])
+    s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
   end
 end
 

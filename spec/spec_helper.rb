@@ -1,6 +1,6 @@
 # encoding: utf-8
 require "bundler"
-Bundler.require(:default, :test)
+Bundler.require(:default, :development)
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require "dnif"

@@ -42,7 +42,7 @@ module Dnif
         "timestamp"
       when :boolean
         "bool"
-      when :float
+      when :float, :decimal
         "float"
       end
     end

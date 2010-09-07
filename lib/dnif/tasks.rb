@@ -38,7 +38,7 @@ namespace :dnif do
 
     base_path = File.join(config_path, Dnif.environment + ".erb")
     if not File.exist?(base_path)
-      FileUtils.cp(File.dirname(__FILE__) + "/../../test/fixtures/templates/config.erb", base_path) # TODO change this path. find out how this kind of stuff is handle in others gems
+      FileUtils.cp(File.dirname(__FILE__) + "/../../templates/config.erb", base_path) # TODO change this path. find out how this kind of stuff is handle in others gems
     end
 
     Dnif.load_models
