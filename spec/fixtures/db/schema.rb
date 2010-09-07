@@ -7,6 +7,7 @@ ActiveRecord::Schema.define(:version => 1) do
   create_table "users", :force => true do |t|
     t.string :name
     t.boolean :active
+    t.decimal :weight, :precision => 16, :scale => 2
   end
 
   create_table "people", :force => true do |t|

@@ -8,7 +8,7 @@ describe Dnif::Document do
     it "should generate a single document" do
       Dnif::MultiAttribute.should_receive(:encode).with("User").and_return("1,2,3,4")
 
-      user = User.create!(:name => "Rafael Souza", :active => true)
+      user = User.create!(:name => "Rafael Souza", :active => true, :weight => 34.5)
 
       document = Dnif::Document.new(user)
       expected = File.read(File.dirname(__FILE__) + "/../fixtures/sphinx_5.xml")

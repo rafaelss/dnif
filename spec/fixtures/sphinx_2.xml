@@ -8,6 +8,7 @@
   <class_id>3</class_id>
   <class_name>334,623,884,1125</class_name>
   <active>true</active>
+  <weight></weight>
   <clicked>10</clicked>
   <published_at>{now}</published_at>
   <expire_at>{expire}</expire_at>

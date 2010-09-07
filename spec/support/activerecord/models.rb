@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   define_index do
     field :name
     attribute :active, :type => :boolean
+    attribute :weight, :type => :decimal
   end
 end
 

@@ -8,6 +8,7 @@
   <sphinx:attr name="class_id" type="int"/>
   <sphinx:attr name="class_name" type="multi"/>
   <sphinx:attr name="active" type="bool"/>
+  <sphinx:attr name="weight" type="float"/>
   <sphinx:attr name="clicked" type="int"/>
   <sphinx:attr name="published_at" type="timestamp"/>
   <sphinx:attr name="expire_at" type="timestamp"/>
