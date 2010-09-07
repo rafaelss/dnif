@@ -1,4 +1,5 @@
-require 'fileutils'
+require "riddle"
+require "fileutils"
 
 if defined?(Rails)
   Dnif.root_path = Rails.root

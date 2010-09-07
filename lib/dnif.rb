@@ -1,6 +1,8 @@
 # encoding: utf-8
 require "bundler"
-Bundler.require(:default)
+Bundler.setup(:default)
+
+require "riddle"
 
 module Dnif
   extend self
