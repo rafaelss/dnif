@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dnif}
-  s.version = "0.0.1.beta.5"
+  s.version = "0.0.1.beta.6"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rafael Souza"]
-  s.date = %q{2010-09-07}
+  s.date = %q{2010-09-08}
   s.description = %q{dnif is a gem to index data using ActiveRecord finders, letting you index your custom methods and not only your table fields}
   s.email = %q{me@rafaelss.com}
   s.extra_rdoc_files = [
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/dnif/index.rb",
     "lib/dnif/indexer.rb",
     "lib/dnif/multi_attribute.rb",
+    "lib/dnif/railtie.rb",
     "lib/dnif/schema.rb",
     "lib/dnif/search.rb",
     "lib/dnif/tasks.rb",
@@ -84,11 +85,9 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<riddle>, [">= 1.1.0"])
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
-      s.add_runtime_dependency(%q<awesome_print>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
       s.add_development_dependency(%q<database_cleaner>, [">= 0"])
-      s.add_development_dependency(%q<awesome_print>, [">= 0"])
       s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
     else
       s.add_dependency(%q<rake>, [">= 0"])
@@ -96,11 +95,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_dependency(%q<riddle>, [">= 1.1.0"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
-      s.add_dependency(%q<awesome_print>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
       s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
       s.add_dependency(%q<database_cleaner>, [">= 0"])
-      s.add_dependency(%q<awesome_print>, [">= 0"])
       s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
     end
   else
@@ -109,11 +106,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<activesupport>, [">= 3.0.0"])
     s.add_dependency(%q<riddle>, [">= 1.1.0"])
     s.add_dependency(%q<builder>, [">= 2.1.2"])
-    s.add_dependency(%q<awesome_print>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 1.5.0.pre2"])
     s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
     s.add_dependency(%q<database_cleaner>, [">= 0"])
-    s.add_dependency(%q<awesome_print>, [">= 0"])
     s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
   end
 end
