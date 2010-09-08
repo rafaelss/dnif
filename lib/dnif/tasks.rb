@@ -1,26 +1,29 @@
-require "riddle"
 require "fileutils"
-
-if defined?(Rails)
-  Dnif.root_path = Rails.root
-  Dnif.environment = Rails.env
-  Dnif.models_path = File.join(Rails.root, "app", "models")
-end
 
 def controller
   require 'riddle'
 
-  root_path = Dnif.root_path || "."
-
   configuration = Riddle::Configuration.new
-  configuration.searchd.pid_file   = "#{root_path}/log/searchd.#{Dnif.environment}.pid"
-  configuration.searchd.log        = "#{root_path}/log/searchd.log"
-  configuration.searchd.query_log  = "#{root_path}/log/searchd.query.log"
+  configuration.searchd.pid_file   = "#{Dnif.root_path}/log/searchd.#{Dnif.environment}.pid"
+  configuration.searchd.log        = "#{Dnif.root_path}/log/searchd.log"
+  configuration.searchd.query_log  = "#{Dnif.root_path}/log/searchd.query.log"
 
-  Riddle::Controller.new(configuration, "#{root_path}/config/sphinx/#{Dnif.environment}.conf")
+  Riddle::Controller.new(configuration, "#{Dnif.root_path}/config/sphinx/#{Dnif.environment}.conf")
 end
 
 namespace :dnif do
+
+  if !Rake::Task.task_defined?(:environment)
+    desc "Set default values for Dnif"
+    task :environment do
+      Dnif.root_path ||= Dir.pwd
+      Dnif.environment ||= "development"
+
+      if !Dnif.models_path.nil?
+        Dnif.load_models
+      end
+    end
+  end
 
   desc "Generates the configuration file needed for sphinx"
   task :configure => :environment do
@@ -29,22 +32,19 @@ namespace :dnif do
       exit
     end
 
-    Dnif.root_path ||= File.expand_path(File.dirname("."))
-    Dnif.environment ||= "development"
-
     config_path = File.join(Dnif.root_path, "config/sphinx")
-    if not File.exist?(config_path)
+    if !File.exist?(config_path)
       FileUtils.mkdir_p(config_path)
     end
 
     base_path = File.join(config_path, Dnif.environment + ".erb")
-    if not File.exist?(base_path)
+    if !File.exist?(base_path)
       FileUtils.cp(File.dirname(__FILE__) + "/../../templates/config.erb", base_path) # TODO change this path. find out how this kind of stuff is handle in others gems
     end
 
     Dnif.load_models
     path = Dnif::Configuration.generate(base_path)
-    ap "\n> config generated: #{path}"
+    puts "\n>> config generated: #{path}"
   end
 
   desc "Generates the XML used by sphinx to create indexes"
@@ -59,21 +59,24 @@ namespace :dnif do
   desc "Index data for sphinx"
   task :index => :environment do
     controller.index(:verbose => true)
-    ap "\n> data indexed"
+    puts "\n>> data indexed" # TODO show this only whether daemon is really indexed
   end
 
   desc "Stop sphinx daemon"
   task :stop => :environment do
     controller.stop
-    ap "\n> daemon stopped"
+    puts "\n>> daemon stopped" # TODO show this only whether daemon is really stopped
   end
 
   desc "Start sphinx daemon"
   task :start => :environment do
     controller.start
-    ap "\n> daemon started"
+    puts "\n>> daemon started" # TODO show this only whether daemon is really started
   end
 
+  desc "Restart sphinx daemon"
+  task :restart => [ :stop, :start ]
+
   desc "Rebuild sphinx index"
-  task :rebuild => [:index, :stop, :start]
+  task :rebuild => [ :index, :restart ]
 end

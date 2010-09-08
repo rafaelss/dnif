@@ -11,7 +11,7 @@ module Dnif
     end
 
     rake_tasks do
-      load "dnif/tasks"
+      load "dnif/tasks.rb"
     end
   end
 end
