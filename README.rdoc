@@ -15,7 +15,7 @@ dnif is a gem to index data using ActiveRecord finders (for now), letting you in
       field :email
       attribute :created_at, :type => :datetime
 
-      where ["active = ?", false]
+      where "active = ?", false
     end
 
     def full_name
