@@ -14,7 +14,6 @@ module Dnif
   autoload :Indexer, "dnif/indexer"
   autoload :MultiAttribute, "dnif/multi_attribute"
   autoload :Search, "dnif/search"
-  autoload :Version, "dnif/version"
 
   def root_path
     @root_path

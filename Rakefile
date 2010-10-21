@@ -10,7 +10,7 @@ end
 require "jeweler"
 
 $LOAD_PATH.unshift('lib')
-require "dnif"
+require "dnif/version"
 
 Jeweler::Tasks.new do |gemspec|
   gemspec.name = "dnif"
