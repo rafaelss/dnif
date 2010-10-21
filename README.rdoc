@@ -4,6 +4,18 @@ dnif is the new find... for sphinx
 
 dnif is a gem to index data using ActiveRecord finders (for now), letting you index custom methods and not only table columns
 
+== Installation
+
+Install gem
+
+  gem install dnif
+
+Put line below in your Gemfile
+
+  gem "dnif"
+
+Now, all you need is configure your models and run rake tasks. See below.
+
 == Usage
 
   require "dnif"
