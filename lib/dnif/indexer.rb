@@ -22,8 +22,9 @@ module Dnif
         schema = Schema.new(self)
         xml << schema.generate
 
-        results = all(:conditions => indexes[self.name].conditions)
-        results.each do |object|
+        results = self
+        results = where(*indexes[self.name].conditions) if indexes[self.name].conditions.present?
+        results.find_each(:batch_size => 5000) do |object|
           document = Document.new(object)
           xml << document.generate
         end

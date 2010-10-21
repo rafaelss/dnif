@@ -15,6 +15,6 @@ describe Dnif::Index do
 
   it "should define where clause" do
     index = Dnif::Index.new(&proc { where "field = 'value'" })
-    index.conditions.should == "field = 'value'"
+    index.conditions.should == ["field = 'value'"]
   end
 end

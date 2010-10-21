@@ -17,7 +17,7 @@ describe Dnif::Indexer do
 
       klass.indexes["Klass"].fields.should == [ :a ]
       klass.indexes["Klass"].attributes.should == { :b => :integer }
-      klass.indexes["Klass"].conditions.should == "c"
+      klass.indexes["Klass"].conditions.should == ["c"]
 
       klass.indexes.delete("Klass")
     end

@@ -22,7 +22,7 @@ module Dnif
       @attributes[name] = options[:type]
     end
 
-    def where(conditions)
+    def where(*conditions)
       @conditions = conditions
     end
   end
