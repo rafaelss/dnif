@@ -26,11 +26,5 @@ end
 
 Jeweler::GemcutterTasks.new
 
-desc "Generate gemspec and build gem"
-task :build_gem do
-  Rake::Task["gemspec"].invoke
-  Rake::Task["build"].invoke
-end
-
 require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
