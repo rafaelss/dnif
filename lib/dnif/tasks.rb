@@ -64,7 +64,10 @@ namespace :dnif do
 
   desc "Stop sphinx daemon"
   task :stop => :environment do
-    controller.stop
+    while controller.running?
+      controller.stop
+      sleep(1)
+    end
     puts "\n>> daemon stopped" # TODO show this only whether daemon is really stopped
   end
 
