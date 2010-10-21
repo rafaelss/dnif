@@ -31,7 +31,6 @@ dnif is a gem to index data using ActiveRecord finders (for now), letting you in
 
 == TODO
 
-- Add messages for rake tasks
 - Better error handler
 - Try to remove ActiveRecord dependency, making it work with others ORMs/ODMs/etc
 - Documentation
