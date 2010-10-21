@@ -1,11 +1,19 @@
 class Post
 
   extend Dnif::Search
+
+  def self.primary_key
+    "id"
+  end
 end
 
 class Comment
 
   extend Dnif::Search
+
+  def self.primary_key
+    "id"
+  end
 end
 
 class User < ActiveRecord::Base

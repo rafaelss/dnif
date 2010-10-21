@@ -53,7 +53,7 @@ module Dnif
     end
 
     def document_id
-      @object.id + encoded_class_name.split(',').sum { |c| c.to_i }
+      @object.send(@object.class.primary_key.to_sym) + encoded_class_name.split(',').sum { |c| c.to_i }
     end
 
     private
