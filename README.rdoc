@@ -36,7 +36,6 @@ dnif is a gem to index data using ActiveRecord finders (for now), letting you in
 - Try to remove ActiveRecord dependency, making it work with others ORMs/ODMs/etc
 - Documentation
 - Improve test suite
-- Index in chunks
 - Support to delta index (or something like that)
 - Remove the class_name (seems not be necessary anymore)
 - Move this TODO to Issues
