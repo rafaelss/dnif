@@ -72,8 +72,9 @@ describe Dnif do
       riddle = mock("Riddle")
       riddle.should_receive(:query).with("my search", "*").and_return(results)
       Dnif.should_receive(:client).and_return(riddle)
-      Post.should_receive(:find_all_by_id).once.with([1])
-      Comment.should_receive(:find_all_by_id).once.with([2])
+
+      Post.should_receive(:where).with("id IN (?)", [1]).and_return([])
+      Comment.should_receive(:where).with("id IN (?)", [2]).and_return([])
 
       Dnif.search("my search")
     end
@@ -90,8 +91,8 @@ describe Dnif do
       Riddle::Client::Filter.should_receive(:new).with("class_id", [0])
       Riddle::Client::Filter.should_receive(:new).with("class_id", [1])
 
-      Post.should_receive(:find_all_by_id).once.with([1])
-      Comment.should_receive(:find_all_by_id).once.with([2])
+      Post.should_receive(:where).with("id IN (?)", [1]).and_return([])
+      Comment.should_receive(:where).with("id IN (?)", [2]).and_return([])
 
       Post.search("post")
       Comment.search("comment")
@@ -106,7 +107,8 @@ describe Dnif do
       ActiveRecord::Base.should_receive(:indexes).and_return({ "Post" => mock })
 
       Riddle::Client::Filter.should_receive(:new).with("class_id", [0])
-      Post.should_receive(:find_all_by_id).once.with([1])
+
+      Post.should_receive(:where).with("id IN (?)", [1]).and_return([])
 
       Dnif.search("post", :classes => "Post")
     end

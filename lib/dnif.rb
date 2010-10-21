@@ -65,17 +65,18 @@ module Dnif
     results = client.query(query, options[:index])
     raise results[:error] if results[:error]
 
-    models = results[:matches].inject({}) do |memo, match|
+    models = {}
+    results[:matches].each do |match|
       encoded_class_name = match[:attributes]["class_name"].split(',').flatten
       class_name = Dnif::MultiAttribute.decode(encoded_class_name)
 
-      memo[class_name] ||= []
-      memo[class_name] << (match[:doc] - encoded_class_name.sum { |c| c.to_i })
-      memo
+      models[class_name] ||= []
+      models[class_name] << (match[:doc] - encoded_class_name.sum { |c| c.to_i })
     end
 
     models.map do |class_name, ids|
-      class_name.constantize.find_all_by_id(ids)
+      klass = class_name.constantize
+      class_name.constantize.where("#{klass.primary_key} IN (?)", ids)
     end.flatten
   end
 
