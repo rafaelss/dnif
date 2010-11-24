@@ -95,6 +95,10 @@ module Dnif
   end
 end
 
+if defined?(Rails)
+  require "dnif/railtie"
+end
+
 if defined?(ActiveRecord::Base)
   ActiveRecord::Base.extend(Dnif::Indexer)
   ActiveRecord::Base.extend(Dnif::Search)
