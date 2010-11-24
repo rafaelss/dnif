@@ -1,7 +1,4 @@
 # encoding: utf-8
-require "bundler"
-Bundler.setup(:default)
-
 require "riddle"
 
 module Dnif
