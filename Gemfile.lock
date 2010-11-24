@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    dnif (0.1.2)
-      activerecord (>= 3.0.3)
-      activesupport (>= 3.0.3)
+    dnif (0.1.3)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
       builder (>= 2.1.2)
       rake
       riddle (>= 1.1.0)
@@ -43,8 +43,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (>= 3.0.3)
-  activesupport (>= 3.0.3)
+  activerecord (>= 3.0.0)
+  activesupport (>= 3.0.0)
   builder (>= 2.1.2)
   database_cleaner
   dnif!
